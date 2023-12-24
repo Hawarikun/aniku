@@ -1,10 +1,11 @@
 # aniku
+# Flutter + Riverpod + Jikan API 
 
 A new Flutter project.
 
-## Getting Started
+## what is aniku ?
 
-This project is a starting point for a Flutter application.
+application that provides information about anime.
 
 A few resources to get you started if this is your first Flutter project:
 
