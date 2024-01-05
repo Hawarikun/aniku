@@ -1,4 +1,7 @@
 import 'package:aniku/core/config/assets.dart';
+import 'package:aniku/core/model/anime.dart';
+
+import 'package:aniku/features/detail_anime/persentation/view/anime_detail.dart';
 import 'package:aniku/pages/home.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +10,7 @@ import 'package:go_router/go_router.dart';
 
 class AppRoutes {
   static const home = "home";
+  static const detail = "detail";
 
   static final GoRouter goRouter = GoRouter(
     initialLocation: "/home",
@@ -15,6 +19,11 @@ class AppRoutes {
         path: "/home",
         name: home,
         pageBuilder: _homePageBuilder,
+      ),
+      GoRoute(
+        path: "/detail",
+        name: detail,
+        pageBuilder: _animeDetailPageBuilder,
       ),
     ],
   );
@@ -38,6 +47,14 @@ class AppRoutes {
           nextScreen: const HomePage(),
           splashTransition: SplashTransition.fadeTransition,
         ),
+      ),
+    );
+  }
+
+  static Page _animeDetailPageBuilder(context, GoRouterState state) {
+    return transition(
+      child: AnimeDetailPage(
+        animeDetail: state.extra as Anime,
       ),
     );
   }

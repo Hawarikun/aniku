@@ -1,9 +1,10 @@
+import 'package:aniku/core/model/anime.dart';
 import 'package:aniku/features/top_anime/data/top_anime.dart';
-import 'package:aniku/features/top_anime/domain/top_anime.dart';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TopAnimeController extends StateNotifier<AsyncValue<List<TopAnime>>> {
+class TopAnimeController extends StateNotifier<AsyncValue<List<Anime>>> {
   TopAnimeController(this.repo, this.params)
       : super(const AsyncValue.loading()) {
     index();
@@ -13,36 +14,24 @@ class TopAnimeController extends StateNotifier<AsyncValue<List<TopAnime>>> {
   final TopAnimeParams params;
 
   Future index() async {
+    print(await repo.index());
     state = const AsyncValue.loading();
     try {
-      final response = await repo.index(
-        keyword: params.keyword,
-        limit: params.limit,
-      );
+      final response = await repo.index();
       state = AsyncValue.data(response);
     } catch (e, s) {
-      print(e);
-
       state = AsyncValue.error(e, s);
     }
   }
 }
 
 class TopAnimeParams extends Equatable {
-  const TopAnimeParams({
-    this.keyword,
-    this.limit,
-  });
-
-  final String? keyword;
-  final int? limit;
-
   @override
-  List<Object?> get props => [keyword, limit];
+  List<Object?> get props => [];
 }
 
 final topAnimeControllerProv = AutoDisposeStateNotifierProviderFamily<
-    TopAnimeController, AsyncValue<List<TopAnime>>, TopAnimeParams>((
+    TopAnimeController, AsyncValue<List<Anime>>, TopAnimeParams>((
   ref,
   params,
 ) {

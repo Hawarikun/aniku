@@ -1,6 +1,7 @@
 import 'package:aniku/core/apis/top_anime.dart';
 import 'package:aniku/core/helper/api.dart';
-import 'package:aniku/features/top_anime/domain/top_anime.dart';
+import 'package:aniku/core/model/anime.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TopAnimeRepository {
@@ -8,19 +9,13 @@ class TopAnimeRepository {
 
   final TopAnimeApi api;
 
-  Future<List<TopAnime>> index({String? keyword, int? limit}) async {
+  Future<List<Anime>> index({String? keyword, int? limit}) async {
     return await ApiHelper().getData(
-      uri: api.index(
-        keyword: keyword,
-        limit: limit,
-      ),
+      uri: api.index(),
       header: ApiHelper.header(),
       builder: (data) {
-        // print(data["data"].length);
-        // print(data['pagination']);
         return List.generate(data["data"].length, (index) {
-
-          return TopAnime.fromJson(
+          return Anime.fromJson(
             data['data'][index],
           );
         });

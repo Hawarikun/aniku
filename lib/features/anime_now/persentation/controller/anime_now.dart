@@ -1,10 +1,9 @@
+import 'package:aniku/core/model/anime.dart';
 import 'package:aniku/features/anime_now/data/anime_now.dart';
-import 'package:aniku/features/anime_now/domain/anime_now.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AnimeNowController
-    extends StateNotifier<AsyncValue<List<Now>>> {
+class AnimeNowController extends StateNotifier<AsyncValue<List<Anime>>> {
   AnimeNowController(this.repo, this.params)
       : super(const AsyncValue.loading()) {
     index();
@@ -16,10 +15,7 @@ class AnimeNowController
   Future index() async {
     state = const AsyncValue.loading();
     try {
-      final response = await repo.index(
-        keyword: params.keyword,
-        limit: params.limit,
-      );
+      final response = await repo.index();
       state = AsyncValue.data(response);
     } catch (e, s) {
       state = AsyncValue.error(e, s);
@@ -28,21 +24,12 @@ class AnimeNowController
 }
 
 class AnimeNowParams extends Equatable {
-  const AnimeNowParams({
-    this.keyword,
-    this.limit,
-  });
-
-  final String? keyword;
-  final int? limit;
-
   @override
-  List<Object?> get props => [keyword, limit];
+  List<Object?> get props => [];
 }
 
-
 final animeNowControllerProv = AutoDisposeStateNotifierProviderFamily<
-    AnimeNowController, AsyncValue<List<Now>>, AnimeNowParams>((
+    AnimeNowController, AsyncValue<List<Anime>>, AnimeNowParams>((
   ref,
   params,
 ) {

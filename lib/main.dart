@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(
             seedColor: ColorApp.primary, brightness: Brightness.dark),
         textTheme: myTextTheme,
-        useMaterial3: true, 
+        useMaterial3: true,
       ),
       routeInformationParser: AppRoutes.goRouter.routeInformationParser,
       routeInformationProvider: AppRoutes.goRouter.routeInformationProvider,
